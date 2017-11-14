@@ -1,0 +1,230 @@
+﻿<Page
+    x:Class="SemTk_Universal_Support_Demo_App.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SemTk_Universal_Support_Demo_App"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+
+        <Flyout x:Key="FlyoutBase2">
+            <Grid Height="100" Width="100"/>
+        </Flyout>
+        <Flyout x:Key="classListFlyout">
+            <Grid Height="100" Width="100"/>
+        </Flyout>
+
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" FlyoutBase.AttachedFlyout="{StaticResource FlyoutBase2}" Margin="-4,0,-265,0" HorizontalAlignment="Left" Width="1769">
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="112" Margin="21,19,0,0" Stroke="Black" VerticalAlignment="Top" Width="1448"/>
+        <Button  x:Name="loadConnectionButton" Content="Load Connection" HorizontalAlignment="Left" Margin="1260,62,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.169,1.008" Width="148" Click="Button_Click" >
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="serverValuesFlyout">
+                    <Grid Height="352" Width="427">
+                        <TextBlock HorizontalAlignment="Left" Margin="60,10,0,0" TextWrapping="Wrap" Text="Server details needed to continue..." VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="60,59,0,0" TextWrapping="Wrap" Text="OntologyInfo Server" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="60,98,0,0" TextWrapping="Wrap" Text="OntologyInfo Port" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="60,139,0,0" TextWrapping="Wrap" Text="NodeGroup Server" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="60,180,0,0" TextWrapping="Wrap" Text="NodeGroup Port" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="60,225,0,0" TextWrapping="Wrap" Text="Execution Server" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="60,262,0,0" TextWrapping="Wrap" Text="Execution Port" VerticalAlignment="Top"/>
+                        <Button Content="Set Service Information" HorizontalAlignment="Left" Margin="248,295,0,0" VerticalAlignment="Top" Click="SetService_Click"/>
+                        <TextBox x:Name="oServerBox" HorizontalAlignment="Left" Margin="199,53,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+                        <TextBox x:Name="oPortBox" HorizontalAlignment="Left" Margin="199,92,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+                        <TextBox x:Name="ngServerBox" HorizontalAlignment="Left" Margin="199,133,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+                        <TextBox x:Name="ngPortBox" HorizontalAlignment="Left" Margin="199,174,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+                        <TextBox x:Name="eServerBox" HorizontalAlignment="Left" Margin="199,215,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+                        <TextBox x:Name="ePortBox" HorizontalAlignment="Left" Margin="199,256,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+
+        </Button>
+        <TextBox x:Name="connectionTextBox" HorizontalAlignment="Left" Margin="47,62,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="52" Width="1188">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout>
+                    <Grid Height="49" Width="432">
+                        <TextBlock HorizontalAlignment="Left" Margin="60,10,0,0" TextWrapping="Wrap" Text="Connection details needed to continue..." VerticalAlignment="Top"/>
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </TextBox>
+        <Border x:Name="ontologyBoxControl" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="788" Margin="21,161,0,0" VerticalAlignment="Top" Width="316">
+            <Button Content="Add to NodeGroup" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,743,0,0" Click="Button_Click_1"/>
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="AnchorFlyout">
+                    <Grid x:Name="AnchorGrid"  Height="600" Width="500">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="anchor new node to the following class" VerticalAlignment="Top" Margin="12,0,0,0"/>
+                        <ListView x:Name="connectionPositionView" HorizontalAlignment="Left" Height="546" Margin="10,25,0,0" VerticalAlignment="Top" Width="416" DataContext="{Binding}" SelectionChanged="connectionPositionView_SelectionChanged" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding AnchorName}" FontWeight="Bold" Margin="20,0,20,8"
+                                            FontSize="18" 
+                                            FontStyle="Italic" 
+                                            Foreground="DarkBlue"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout x:Name="PathFlyout">
+                                <Grid Height="600" Width="500">
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="select a path" VerticalAlignment="Top" Margin="12,0,0,0"/>
+                                    <ListView x:Name="connectionSelectionView" HorizontalAlignment="Left" Height="546" Margin="10,25,0,0" VerticalAlignment="Top" Width="416" DataContext="{Binding}" SelectionChanged="connectionSelectionView_SelectionChanged" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding PathAsString}" FontWeight="Bold" Margin="20,0,20,8" TextWrapping="Wrap"
+                                            FontSize="18" 
+                                            FontStyle="Italic" 
+                                            Foreground="DarkBlue"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+
+                                </Grid>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+
+
+
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </Border>
+        <TextBlock HorizontalAlignment="Left" Margin="27,165,0,0" TextWrapping="Wrap" Text="Ontology Info" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="47,37,0,0" TextWrapping="Wrap" Text="Connection Information" VerticalAlignment="Top"/>
+        <ListView x:Name="oInfoView" HorizontalAlignment="Left" Height="694" Margin="33,190,0,0" VerticalAlignment="Top" Width="291" DataContext="{Binding}" SelectionChanged="oInfoView_SelectionChanged" >
+            <FlyoutBase.AttachedFlyout>
+                <Flyout >
+                    <Grid Height="600" Width="500">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Properties" VerticalAlignment="Top" Margin="12,0,0,0"/>
+                        <ListView x:Name="propertyView" HorizontalAlignment="Left" Height="546" Margin="10,25,0,0" VerticalAlignment="Top" Width="416" DataContext="{Binding}" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="20,0,20,8"
+                                            FontSize="18" 
+                                            FontStyle="Italic" 
+                                            Foreground="DarkBlue"/>
+                                        <TextBlock Text="{Binding Range}" Foreground="Blue" Margin="20,0,20,8"
+                                            FontSize="12" 
+                                            FontStyle="Italic" 
+                                            FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="20,0,20,8"
+                           FontSize="18" 
+                           FontStyle="Italic" 
+                           Foreground="DarkBlue"/>
+                        <TextBlock Text="{Binding NameSpace}" Foreground="Blue" Margin="20,0,20,8"
+                           FontSize="12" 
+                           FontStyle="Italic" 
+                           FontWeight="SemiBold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Canvas HorizontalAlignment="Left" Height="100" Margin="1235,290,0,0" VerticalAlignment="Top" Width="100"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="746" Margin="362,161,0,0" Stroke="Black" VerticalAlignment="Top" Width="1046">
+
+        </Rectangle>
+        <Canvas x:Name="NodeGroupCanvasControl" HorizontalAlignment="Left" Height="694" Margin="384,190,0,0" VerticalAlignment="Top" Width="992"/>
+        <Button Content="Test Query" HorizontalAlignment="Left" Margin="1138,922,0,0" VerticalAlignment="Top" Height="42" Width="270" Click="Button_Click_2"/>
+        <Border x:Name="Rect" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="20" Margin="362,980,0,0" VerticalAlignment="Top" Width="1107">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="fly">
+                    <Grid Height="900" Width="1000">
+
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Results" VerticalAlignment="Top" Margin="12,0,0,0" Grid.RowSpan="2"/>
+                        <Canvas x:Name="NodeGroupResults" HorizontalAlignment="Left" Height="694" Margin="12,27.5,0,0" VerticalAlignment="Top" Width="980" Grid.Row="1"/>
+
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </Border>
+
+        <Grid HorizontalAlignment="Left" Height="58" Margin="364,914,0,0" VerticalAlignment="Top" Width="661">
+            <Button x:Name="PlaneTest" Content="Test Plane Result" HorizontalAlignment="Left" Margin="406,10,0,0" VerticalAlignment="Top" Height="42" Width="245" Click="TestPlaneNodeGroup"/>
+            <Button x:Name="ReplaneTest" Content="Test Replane" HorizontalAlignment="Left" Margin="74,10,0,0" VerticalAlignment="Top" Height="42" Width="245" Click="Button_Click_3"/>
+        </Grid>
+        <Border x:Name="ontologyBoxControl_Copy" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="788" Margin="1433,161,0,0" VerticalAlignment="Top" Width="316">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="AnchorFlyout1">
+                    <Grid x:Name="AnchorGrid1"  Height="600" Width="500">
+
+
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout x:Name="PathFlyout1">
+                                <Grid Height="600" Width="500">
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="select a path" VerticalAlignment="Top" Margin="12,0,0,0"/>
+                                    <ListView x:Name="connectionSelectionView1" HorizontalAlignment="Left" Height="546" Margin="10,25,0,0" VerticalAlignment="Top" Width="416" DataContext="{Binding}" SelectionChanged="connectionSelectionView_SelectionChanged" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding PathAsString}" FontWeight="Bold" Margin="20,0,20,8" TextWrapping="Wrap"
+                                                        FontSize="18" 
+                                                        FontStyle="Italic" 
+                                                        Foreground="DarkBlue"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+
+                                </Grid>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+
+
+
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="anchor new node to the following class" VerticalAlignment="Top" Margin="12,0,0,0"/>
+                        <ListView x:Name="connectionPositionView1" HorizontalAlignment="Left" Height="546" Margin="10,25,0,0" VerticalAlignment="Top" Width="416" DataContext="{Binding}" SelectionChanged="connectionPositionView_SelectionChanged" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding AnchorName}" FontWeight="Bold" Margin="20,0,20,8"
+                                            FontSize="18" 
+                                            FontStyle="Italic" 
+                                            Foreground="DarkBlue"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+
+
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </Border>
+        <TextBlock HorizontalAlignment="Left" Margin="1439,165,0,0" TextWrapping="Wrap" Text="Query Sparql IDs" VerticalAlignment="Top"/>
+        <ListView x:Name="sparqlID_view" HorizontalAlignment="Left" Height="694" Margin="1445,190,0,0" VerticalAlignment="Top" Width="291" DataContext="{Binding}" SelectionChanged="sparqlID_view_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="20,0,20,8"
+                            FontSize="14" 
+                            FontStyle="Italic" 
+                            Foreground="DarkBlue"/>
+                     </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Page>
