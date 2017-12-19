@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="AnnotatableElement.cs" />
     <Compile Include="BelmontUtil.cs" />
+    <Compile Include="BlockedConnectionInfo.cs" />
     <Compile Include="Details.cs" />
     <Compile Include="DetailsTuple.cs" />
     <Compile Include="GeneralResultSet.cs" />

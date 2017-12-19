@@ -1,4 +1,21 @@
-﻿using System;
+﻿/**
+ ** Copyright 2017 General Electric Company
+ **
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ ** 
+ **     http://www.apache.org/licenses/LICENSE-2.0
+ ** 
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -56,16 +73,16 @@ namespace SemTk_Universal_Support_Demo_App
 
         private void SetupDebugTexts()
         {
-            this.oServerBox.Text = "vesuvius37.crd.ge.com";
+            this.oServerBox.Text = "dummy-server";
             this.oPortBox.Text = "12057";
 
-            this.ngServerBox.Text = "vesuvius37.crd.ge.com";
+            this.ngServerBox.Text = "dummy-server";
             this.ngPortBox.Text = "12059";
              
-            this.eServerBox.Text = "vesuvius37.crd.ge.com";
+            this.eServerBox.Text = "dummy-server";
             this.ePortBox.Text = "12058";
 
-            this.connectionTextBox.Text ="{\"name\": \"pop music test\",\"domain\": \"http://\",\"model\": [{\"type\": \"virtuoso\",\"url\": \"http://vesuvius37:2420\",\"dataset\": \"http://research.ge.com/test/popmusic/model\"}],\"data\": [{\"type\": \"virtuoso\",\"url\": \"http://vesuvius37:2420\",\"dataset\": \"http://research.ge.com/test/popmusic/data\"}]}";
+            this.connectionTextBox.Text = "<PASTE SEMTK CONNECTION JSON HERE";
 
         }
 
@@ -409,6 +426,8 @@ namespace SemTk_Universal_Support_Demo_App
 
         public void TestPlaneNodeGroup(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("\n\n\n-----------------------------Planing started-------------------------------");
+
 
             String className = ((SparqlIDViewEntry)this.sparqlID_view.SelectedItem).Name;
 
@@ -429,27 +448,8 @@ namespace SemTk_Universal_Support_Demo_App
 
             planer.PlaneNodeGroupByQuerySparqlId(className, true);
 
-            this.ReplaneTest.IsEnabled = true;
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-
-            String className = ((SparqlIDViewEntry)this.sparqlID_view.SelectedItem).Name;
-
-            if (planer == null)
-            {   // provide primary planing
-                planer.PlaneNodeGroupByQuerySparqlId(className, true);
-            }
-
-            else
-            {   // replane the existing
-                Random r = new Random();
-                List<Node> nodes = this.queryNodeGroup.GetNodeList();
-                int rInt = r.Next(0, nodes.Count);
-
-                planer.PlaneNodeGroupByQuerySparqlId(className, false);
-            }
+       
+            Debug.WriteLine("------------------Planing completed---------------------------");
         }
 
         private void sparqlID_view_SelectionChanged(object sender, SelectionChangedEventArgs e)

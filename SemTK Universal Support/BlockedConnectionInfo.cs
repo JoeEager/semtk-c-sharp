@@ -21,14 +21,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemTK_Universal_Support.SemTK.Belmont
+namespace SemTK_Universal_Support.SemTK.Belmont.InstanceDataSupport
 {
-    public enum NodeDeletionTypes
+    class BlockedConnectionInfo
     {
-        NO_DELETE,
-        TYPE_INFO_ONLY,
-        FULL_DELETE,
-        LIMITED_TO_NODEGROUP,
-        LIMITED_TO_MODEL
+        public String sourceNodeSparqlID;
+        public String destinationNodeSparqlID;
+        public String connectionFullUri;
+
+        public BlockedConnectionInfo(String source, String destination, String fullConnectionUri)
+        {
+            this.sourceNodeSparqlID = source;
+            this.destinationNodeSparqlID = destination;
+            this.connectionFullUri = fullConnectionUri;
+        }
+
+
     }
 }

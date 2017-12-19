@@ -1,4 +1,21 @@
-﻿using System;
+﻿/**
+ ** Copyright 2017 General Electric Company
+ **
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ ** 
+ **     http://www.apache.org/licenses/LICENSE-2.0
+ ** 
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -112,8 +129,10 @@ namespace SemTK_Universal_Support.SemTK.Belmont.InstanceDataSupport
             foreach (Node retNode in this.defaultStateNodeGroup.GetNodeList())
             {
                 this.resultNodesByfullUri[retNode.GetFullUriName()].Add(retNode);
-                
-                foreach(String origID in retNode.GetOriginalSparqlIdsFromInstanceData())
+
+                if (!this.resultsIncomingConnections.ContainsKey(retNode)) { this.resultsIncomingConnections.Add(retNode, new List<Node>() ); }
+
+                foreach (String origID in retNode.GetOriginalSparqlIdsFromInstanceData())
                 {
                     this.resultNodesBySparqlId[origID].Add(retNode);
                 }
@@ -190,8 +209,18 @@ namespace SemTK_Universal_Support.SemTK.Belmont.InstanceDataSupport
         private List<NodeGroup> PlaneNodeGroupByQuerySparqlId(String querySparqlId, NodeGroup startingState)
         {
             // get every instance of the given type. 
-            List<Node> classInstances = this.resultNodesBySparqlId[querySparqlId];
+            List<Node> classInstances_temp = this.resultNodesBySparqlId[querySparqlId];
             List<NodeGroup> tempDisplayNgs = new List<NodeGroup>();
+
+            // need to check the starting state against the classinstances. otherwise, we get some weird results:
+            List<Node> classInstances = new List<Node>();
+            List<Node> checkList = startingState.GetNodeList();
+
+            foreach (Node ndCheck in classInstances_temp)
+            {
+                if(checkList.Contains(ndCheck)) { classInstances.Add(ndCheck); }
+            }
+
 
             // we need to create a blackList precursor that selectively contains the proper classes. it has to remove all of the instances
             // of the class instances that does not also labeled to another query SparqlID. Any with multiple bindings may still be valid.
@@ -289,7 +318,7 @@ namespace SemTK_Universal_Support.SemTK.Belmont.InstanceDataSupport
                             {                               // this seems a bit odd but the node removal is assumed to be true until we find 
                                 if (ndRemoval)              // that it should NOT be removed. this clears up an edge case where a node with more
                                 {                           // missing connections than available ones is being pruned. if ANY connected node
-                                    ndRemoval = true;        // appear in the range, we should NEVER prune the branch (at this point)
+                                    ndRemoval = true;       // appear in the range, we should NEVER prune the branch (at this point)
                                 }
                             }                                                              
                             else { ndRemoval = false; }
@@ -353,33 +382,10 @@ namespace SemTK_Universal_Support.SemTK.Belmont.InstanceDataSupport
 
         private List<NodeGroup> ReplaneNodeGroupByQuerySparqlId(String originalSparqlId)
         {
-            /* assuming a collection of planed NodeGrroups already exists, modify the collection to provide an 
-             * extra layer of planing atop the existing one. this will lead to an extra level of sub-division.
-             * hopefully, we can repeat this until there are no more available splits. */
-
-            List<NodeGroup> retval = new List<NodeGroup>();
-
-            // is there evidence that any other planing ever performed?
-            if(this.planedNodeGroups == null || this.planedNodeGroups.Count == 0)
-            {   // just generate based on the default view and quietly walk away
-                Debug.WriteLine("there were no previously planed nodegroups. the default view nodegroup was used instead.");
-                this.PlaneNodeGroupByQuerySparqlId(originalSparqlId, true);
-            }
-
-            else
-            {   // we have a set of already planed ones. use them.
-                Debug.WriteLine("using the existing collection of planed nodegroups.");
-
-                foreach(NodeGroup currSet in this.planedNodeGroups)
-                {
-                    List<NodeGroup> partialReturn = this.PlaneNodeGroupByQuerySparqlId(originalSparqlId, currSet);
-                    retval.AddRange(partialReturn);
-                }
-            }
-            // send it all back.
-            return retval;
+            throw new Exception("not yet implemented");
         }
 
+   
         public List<String> GetQuerySparqlIds()
         {
             List<String> retval = new List<string>();
