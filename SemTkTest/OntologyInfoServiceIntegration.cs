@@ -36,7 +36,7 @@ namespace SemTkTest
     public class OntologyInfoServiceIntegration
     {
 
-        public static String serverAddress = "vesuvius37.crd.ge.com";
+        public static String serverAddress = "fake-server.crd.ge.com";
         public static String protocol = "http";
         public static int onotologyInfoServicePort = 12057;
 
