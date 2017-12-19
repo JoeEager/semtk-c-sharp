@@ -48,7 +48,7 @@ namespace SemTkTest
             RestClientConfig rcc = new RestClientConfig(protocol, serverAddress, onotologyInfoServicePort);
             OntologyInfoServiceClient oisc = new OntologyInfoServiceClient(rcc);
 
-            String sparqlConnectionJsonString = "{\"name\": \"pop music test\",\"domain\": \"http://\",\"model\": [{\"type\": \"virtuoso\",\"url\": \"http://vesuvius37:2420\",\"dataset\": \"http://research.ge.com/test/popmusic/model\"}],\"data\": [{\"type\": \"virtuoso\",\"url\": \"http://vesuvius37:2420\",\"dataset\": \"http://research.ge.com/test/popmusic/data\"}]}";
+            String sparqlConnectionJsonString = "{\"name\": \"pop music test\",\"domain\": \"http://\",\"model\": [{\"type\": \"virtuoso\",\"url\": \"http://fake-server:2420\",\"dataset\": \"http://research.ge.com/test/popmusic/model\"}],\"data\": [{\"type\": \"virtuoso\",\"url\": \"http://fake-server:2420\",\"dataset\": \"http://research.ge.com/test/popmusic/data\"}]}";
             SparqlConnection connect = new SparqlConnection(sparqlConnectionJsonString);
 
             OntologyInfo oInfo = oisc.ExecuteGetOntologyInfo(connect).Result;
