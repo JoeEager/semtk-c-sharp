@@ -68,7 +68,6 @@ namespace SemTk_Universal_Support_Demo_App
             this.SetupDebugTexts();
 
             this.PlaneTest.IsEnabled = false;
-            this.ReplaneTest.IsEnabled = false;
         }
 
         private void SetupDebugTexts()
